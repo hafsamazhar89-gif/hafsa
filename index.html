@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hafsa Mazhar | Business Analytics</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FAF8F4;
+    --warm-white: #F5F1EB;
+    --beige: #EDE8DF;
+    --sand: #D9CFBF;
+    --taupe: #B5A898;
+    --brown: #7A6A5A;
+    --deep: #3D3228;
+    --accent: #8C6E5A;
+    --accent2: #C4A882;
+    --gold: #C9A96E;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--deep);
+    overflow-x: hidden;
+  }
+
+  /* ── ANIMATED BG ── */
+  .bg-layer {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background:
+      radial-gradient(ellipse 80% 60% at 15% 20%, rgba(196,168,130,0.13) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 70% at 85% 75%, rgba(181,168,152,0.10) 0%, transparent 55%),
+      var(--cream);
+  }
+  .floating-shape {
+    position: fixed; border-radius: 50%; opacity: 0.06; pointer-events: none; z-index: 0;
+  }
+  .fs1 { width: 500px; height: 500px; background: var(--gold); top: -150px; right: -100px; animation: drift1 18s ease-in-out infinite; }
+  .fs2 { width: 300px; height: 300px; background: var(--accent); bottom: 10%; left: -80px; animation: drift2 22s ease-in-out infinite; }
+  .fs3 { width: 200px; height: 200px; background: var(--taupe); top: 50%; left: 40%; animation: drift3 15s ease-in-out infinite; }
+  @keyframes drift1 { 0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(-30px,40px) scale(1.05)} }
+  @keyframes drift2 { 0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(25px,-35px) scale(1.08)} }
+  @keyframes drift3 { 0%,100%{transform:translate(0,0)} 33%{transform:translate(20px,20px)} 66%{transform:translate(-15px,10px)} }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 22px 60px;
+    display: flex; justify-content: space-between; align-items: center;
+    background: rgba(250,248,244,0.88);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(181,168,152,0.2);
+    transition: all 0.3s;
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem; font-weight: 600; letter-spacing: 0.04em;
+    color: var(--deep);
+  }
+  .nav-links { display: flex; gap: 36px; }
+  .nav-links a {
+    font-size: 0.82rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--brown); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* ── SECTIONS ── */
+  section { position: relative; z-index: 1; }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center; align-items: flex-start;
+    padding: 120px 10% 0;
+  }
+
+  .hero-eyebrow {
+    font-size: 0.78rem; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 24px;
+    opacity: 0; animation: fadeUp 0.8s 0.3s forwards;
+  }
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.5rem, 8vw, 7rem);
+    font-weight: 500; line-height: 1.05; color: var(--deep);
+    letter-spacing: 0.02em;
+    opacity: 0; animation: fadeUp 0.9s 0.5s forwards;
+  }
+  .hero-tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.1rem, 2vw, 1.45rem);
+    font-style: italic; font-weight: 300;
+    color: var(--accent); margin-top: 14px; letter-spacing: 0.03em;
+    opacity: 0; animation: fadeUp 0.9s 0.65s forwards;
+  }
+    font-size: clamp(1rem, 2vw, 1.25rem); font-weight: 300;
+    color: var(--brown); margin-top: 28px; max-width: 560px; line-height: 1.7;
+    opacity: 0; animation: fadeUp 0.9s 0.75s forwards;
+  }
+  .hero-cta {
+    margin-top: 48px; display: flex; gap: 20px; flex-wrap: wrap;
+    opacity: 0; animation: fadeUp 0.9s 1s forwards;
+  }
+  .btn-primary {
+    padding: 14px 36px;
+    background: var(--deep); color: var(--cream);
+    font-family: 'DM Sans', sans-serif; font-size: 0.82rem;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    border: none; cursor: pointer; text-decoration: none;
+    transition: background 0.25s, transform 0.2s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: var(--accent); transform: translateY(-2px); }
+  .btn-outline {
+    padding: 14px 36px;
+    background: transparent; color: var(--deep);
+    font-family: 'DM Sans', sans-serif; font-size: 0.82rem;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    border: 1.5px solid var(--sand); cursor: pointer; text-decoration: none;
+    transition: border-color 0.25s, color 0.25s, transform 0.2s;
+    display: inline-block;
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+  .hero-scroll {
+    position: absolute; bottom: 48px; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+    color: var(--taupe); font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
+    opacity: 0; animation: fadeIn 1s 1.6s forwards;
+  }
+  .scroll-line {
+    width: 1px; height: 48px; background: var(--sand);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+  @keyframes scrollPulse { 0%,100%{transform:scaleY(1);opacity:0.5} 50%{transform:scaleY(1.4);opacity:1} }
+
+  /* ── ABOUT ── */
+  #about {
+    padding: 120px 10%;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+  }
+  .about-label {
+    font-size: 0.75rem; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 20px;
+  }
+  .about-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 4vw, 3.5rem); font-weight: 400; line-height: 1.15;
+    color: var(--deep); margin-bottom: 28px;
+  }
+  .about-text { color: var(--brown); line-height: 1.85; font-size: 0.97rem; margin-bottom: 16px; }
+  .contact-chips { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+  .chip {
+    padding: 8px 18px; background: var(--beige); border: 1px solid var(--sand);
+    font-size: 0.8rem; color: var(--brown); letter-spacing: 0.05em;
+    transition: background 0.2s;
+  }
+  .chip-btn { cursor: pointer; position: relative; user-select: none; }
+  .chip-btn:hover { background: var(--sand); }
+  .chip-menu {
+    display: none; position: absolute; top: calc(100% + 8px); left: 0;
+    background: var(--cream); border: 1px solid var(--sand);
+    box-shadow: 0 8px 28px rgba(61,50,40,0.12);
+    z-index: 200; min-width: 200px; flex-direction: column;
+  }
+  .chip-menu.open { display: flex; }
+  .chip-menu a {
+    padding: 12px 18px; font-size: 0.82rem; color: var(--brown);
+    text-decoration: none; letter-spacing: 0.04em;
+    border-bottom: 1px solid var(--beige); transition: background 0.15s;
+  }
+  .chip-menu a:last-child { border-bottom: none; }
+  .chip-menu a:hover { background: var(--beige); color: var(--deep); }
+  .about-stats {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 2px;
+  }
+  .stat-card {
+    background: var(--warm-white); border: 1px solid var(--beige);
+    padding: 36px 28px;
+    transition: transform 0.25s, box-shadow 0.25s;
+  }
+  .stat-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(122,106,90,0.12); }
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem; font-weight: 300; color: var(--accent); line-height: 1;
+  }
+  .stat-desc { font-size: 0.82rem; color: var(--brown); margin-top: 10px; letter-spacing: 0.04em; }
+
+  /* ── SKILLS ── */
+  #skills { padding: 100px 10%; background: var(--warm-white); }
+  .section-header { margin-bottom: 64px; }
+  .section-label {
+    font-size: 0.75rem; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 16px;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3rem); font-weight: 400;
+    color: var(--deep);
+  }
+  .skills-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+  .skill-group {
+    background: var(--cream); border: 1px solid var(--beige);
+    padding: 32px 28px;
+    transition: transform 0.25s, box-shadow 0.25s;
+  }
+  .skill-group:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(122,106,90,0.1); }
+  .skill-group-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem; font-weight: 500; color: var(--deep); margin-bottom: 20px;
+    padding-bottom: 14px; border-bottom: 1px solid var(--beige);
+  }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .skill-tag {
+    padding: 6px 14px; background: var(--beige);
+    font-size: 0.78rem; color: var(--brown); letter-spacing: 0.05em;
+    transition: background 0.2s, color 0.2s;
+  }
+  .skill-tag:hover { background: var(--accent); color: var(--cream); }
+
+  /* ── PROJECTS ── */
+  #projects { padding: 120px 10%; }
+  .projects-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 3px; margin-top: 64px; }
+  .project-card {
+    background: var(--warm-white); padding: 48px 40px;
+    border: 1px solid var(--beige);
+    position: relative; overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .project-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0;
+    height: 3px; background: linear-gradient(90deg, var(--accent), var(--gold));
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.4s;
+  }
+  .project-card:hover::before { transform: scaleX(1); }
+  .project-card:hover { transform: translateY(-4px); box-shadow: 0 20px 60px rgba(122,106,90,0.13); }
+  .project-date {
+    font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 16px;
+  }
+  .project-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem; font-weight: 500; color: var(--deep); margin-bottom: 14px; line-height: 1.25;
+  }
+  .project-desc { font-size: 0.88rem; color: var(--brown); line-height: 1.75; margin-bottom: 20px; }
+  .project-bullets { list-style: none; }
+  .project-bullets li {
+    font-size: 0.84rem; color: var(--brown); line-height: 1.6;
+    padding-left: 16px; position: relative; margin-bottom: 8px;
+  }
+  .project-bullets li::before {
+    content: '—'; position: absolute; left: 0; color: var(--accent2);
+  }
+  .project-tools { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+  .project-tool {
+    padding: 4px 12px; border: 1px solid var(--sand);
+    font-size: 0.74rem; color: var(--taupe); letter-spacing: 0.08em;
+  }
+
+  /* ── EXPERIENCE ── */
+  #experience { padding: 120px 10%; background: var(--warm-white); }
+  .timeline { margin-top: 64px; }
+  .timeline-item {
+    display: grid; grid-template-columns: 200px 1fr;
+    gap: 48px; padding: 40px 0;
+    border-bottom: 1px solid var(--beige);
+    opacity: 0; transform: translateY(20px);
+    transition: opacity 0.6s, transform 0.6s;
+  }
+  .timeline-item.visible { opacity: 1; transform: translateY(0); }
+  .timeline-left { text-align: right; padding-top: 4px; }
+  .timeline-period {
+    font-size: 0.78rem; color: var(--accent); letter-spacing: 0.1em;
+    text-transform: uppercase; line-height: 1.5;
+  }
+  .timeline-company {
+    font-size: 0.82rem; color: var(--taupe); margin-top: 8px; font-style: italic;
+  }
+  .timeline-role {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem; font-weight: 500; color: var(--deep); margin-bottom: 16px;
+  }
+  .timeline-bullets { list-style: none; }
+  .timeline-bullets li {
+    font-size: 0.86rem; color: var(--brown); line-height: 1.7;
+    padding-left: 18px; position: relative; margin-bottom: 10px;
+  }
+  .timeline-bullets li::before {
+    content: '▸'; position: absolute; left: 0; color: var(--accent2); font-size: 0.7rem; top: 3px;
+  }
+
+  /* ── EDUCATION ── */
+  #education { padding: 120px 10%; }
+  .edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 64px; }
+  .edu-card {
+    padding: 40px; background: var(--warm-white); border: 1px solid var(--beige);
+    transition: transform 0.25s, box-shadow 0.25s;
+  }
+  .edu-card:hover { transform: translateY(-4px); box-shadow: 0 14px 44px rgba(122,106,90,0.1); }
+  .edu-degree {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem; font-weight: 500; color: var(--deep); margin-bottom: 8px;
+  }
+  .edu-school { font-size: 0.9rem; color: var(--accent); margin-bottom: 6px; font-weight: 500; }
+  .edu-year { font-size: 0.78rem; color: var(--taupe); letter-spacing: 0.1em; text-transform: uppercase; }
+
+  /* ── GAME ── */
+  #game { padding: 120px 10%; background: var(--warm-white); text-align: center; }
+  .game-intro { max-width: 500px; margin: 0 auto 48px; color: var(--brown); line-height: 1.7; font-size: 0.95rem; }
+  .game-wrapper {
+    display: inline-flex; flex-direction: column; align-items: center; gap: 28px;
+  }
+  .game-status {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem; color: var(--deep); min-height: 2rem;
+    transition: all 0.3s;
+  }
+  .board {
+    display: grid; grid-template-columns: repeat(3, 100px);
+    grid-template-rows: repeat(3, 100px);
+    gap: 4px; background: var(--sand);
+  }
+  .cell {
+    width: 100px; height: 100px;
+    background: var(--cream);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.8rem; font-weight: 600;
+    cursor: pointer;
+    transition: background 0.18s;
+    user-select: none;
+  }
+  .cell:hover:not(.taken) { background: var(--beige); }
+  .cell.x-mark { color: var(--accent); animation: popIn 0.25s ease; }
+  .cell.o-mark { color: var(--deep); animation: popIn 0.25s ease; }
+  .cell.win-cell { background: var(--beige); }
+  @keyframes popIn { 0%{transform:scale(0.5);opacity:0} 80%{transform:scale(1.1)} 100%{transform:scale(1);opacity:1} }
+  .game-controls { display: flex; gap: 16px; }
+  .score-board {
+    display: flex; gap: 40px; font-size: 0.85rem; color: var(--brown); letter-spacing: 0.08em;
+  }
+  .score-item strong {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem; color: var(--accent); display: block; text-align: center;
+  }
+
+  /* ── CONTACT ── */
+  #contact { padding: 120px 10%; }
+  .contact-inner {
+    max-width: 640px;
+  }
+  .contact-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 300; line-height: 1.1;
+    color: var(--deep); margin-bottom: 24px;
+  }
+  .contact-heading em { font-style: italic; color: var(--accent); }
+  .contact-sub { color: var(--brown); line-height: 1.8; margin-bottom: 48px; font-size: 0.97rem; }
+  .contact-links { display: flex; flex-direction: column; gap: 16px; }
+  .contact-link {
+    display: flex; align-items: center; gap: 16px;
+    padding: 20px 28px; background: var(--warm-white); border: 1px solid var(--beige);
+    color: var(--deep); text-decoration: none; font-size: 0.9rem;
+    transition: background 0.2s, transform 0.2s, border-color 0.2s;
+  }
+  .contact-link:hover {
+    background: var(--beige); border-color: var(--sand); transform: translateX(6px);
+  }
+  .contact-link-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--taupe); }
+  .contact-link-value { color: var(--deep); font-weight: 500; }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 40px 10%;
+    border-top: 1px solid var(--beige);
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 0.78rem; color: var(--taupe); letter-spacing: 0.08em;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+
+  .reveal {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.7s, transform 0.7s;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 18px 28px; }
+    .nav-links { gap: 20px; }
+    #about { grid-template-columns: 1fr; gap: 48px; }
+    .about-stats { grid-template-columns: 1fr 1fr; }
+    .skills-grid { grid-template-columns: 1fr 1fr; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .timeline-item { grid-template-columns: 1fr; gap: 12px; }
+    .timeline-left { text-align: left; }
+    .edu-grid { grid-template-columns: 1fr; }
+    #hero { padding: 120px 6% 80px; }
+    #about, #skills, #projects, #experience, #education, #game, #contact { padding: 80px 6%; }
+  }
+  @media (max-width: 600px) {
+    .skills-grid { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Animated background -->
+<div class="bg-layer"></div>
+<div class="floating-shape fs1"></div>
+<div class="floating-shape fs2"></div>
+<div class="floating-shape fs3"></div>
+
+<!-- Navigation -->
+<nav>
+  <div class="nav-logo">Hafsa Mazhar</div>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projects</a>
+    <a href="#experience">Experience</a>
+    <a href="#game">Play</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section id="hero">
+  <div class="hero-eyebrow">Business Analytics · Operations Management · Reporting</div>
+  <h1 class="hero-name">Hafsa Mazhar</h1>
+  <p class="hero-tagline">Turning data into decisions, and teams into results.</p>
+
+  <div class="hero-cta">
+    <a href="#projects" class="btn-primary">View My Work</a>
+    <a href="#contact" class="btn-outline">Get In Touch</a>
+  </div>
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- About -->
+<section id="about">
+  <div>
+    <div class="about-label">About Me</div>
+    <h2 class="about-heading reveal">Operations coordinator with a sharp analytical edge.</h2>
+    <p class="about-text reveal">I'm a Business Analytics graduate student at Canisius University with 2+ years of professional experience leading teams, managing multi-project operations, and delivering clear, actionable reporting to stakeholders across all levels.</p>
+    <p class="about-text reveal">My experience spans overseeing field teams and end-to-end project lifecycles to building KPI dashboards and forecasting models. I bring a strong combination of coordination skills and analytical depth, helping organizations improve efficiency and make more strategic, data-driven decisions.</p>
+    <div class="contact-chips reveal">
+      <div class="chip">📍 Austin, TX</div>
+      <div class="chip">🎓 Expected May 2026</div>
+      <div class="chip chip-btn" onclick="toggleEmailMenu(event)">✉️ hafsamazhar89@gmail.com
+        <div class="chip-menu" id="emailMenu">
+          <a href="https://mail.google.com/mail/?view=cm&to=hafsamazhar89@gmail.com" target="_blank">Open in Gmail</a>
+          <a href="https://outlook.live.com/mail/0/deeplink/compose?to=hafsamazhar89@gmail.com" target="_blank">Open in Outlook</a>
+          <a href="mailto:hafsamazhar89@gmail.com">Open in Mail App</a>
+        </div>
+      </div>
+      <div class="chip chip-btn" onclick="copyPhone(this)">📞 +1 (347) 849-9349</div>
+      <div class="chip">🇺🇸 U.S. Citizen</div>
+    </div>
+  </div>
+  <div class="about-stats reveal">
+    <div class="stat-card">
+      <div class="stat-number">2+</div>
+      <div class="stat-desc">Years professional experience</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">15+</div>
+      <div class="stat-desc">Concurrent projects managed monthly</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">22%</div>
+      <div class="stat-desc">Defect reduction via dashboard insights</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">30yr</div>
+      <div class="stat-desc">Housing dataset analyzed in R</div>
+    </div>
+  </div>
+</section>
+
+<!-- Skills -->
+<section id="skills">
+  <div class="section-header reveal">
+    <div class="section-label">Capabilities</div>
+    <h2 class="section-title">Skills &amp; Tools</h2>
+  </div>
+  <div class="skills-grid">
+    <div class="skill-group reveal">
+      <div class="skill-group-title">Data Analysis &amp; Reporting</div>
+      <div class="skill-tags">
+        <span class="skill-tag">SQL</span>
+        <span class="skill-tag">Tableau</span>
+        <span class="skill-tag">RStudio</span>
+        <span class="skill-tag">Python</span>
+        <span class="skill-tag">MS Excel (Advanced)</span>
+        <span class="skill-tag">Pivot Tables</span>
+        <span class="skill-tag">KPI Dashboards</span>
+        <span class="skill-tag">Executive Reporting</span>
+      </div>
+    </div>
+    <div class="skill-group reveal">
+      <div class="skill-group-title">Operations &amp; Coordination</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Team Leadership</span>
+        <span class="skill-tag">Project Management</span>
+        <span class="skill-tag">Cross-functional Collaboration</span>
+        <span class="skill-tag">Resource Allocation</span>
+        <span class="skill-tag">Workflow Optimization</span>
+        <span class="skill-tag">Stakeholder Management</span>
+        <span class="skill-tag">Asana</span>
+        <span class="skill-tag">Salesforce</span>
+        <span class="skill-tag">QuickBooks</span>
+        <span class="skill-tag">SAP ERP</span>
+      </div>
+    </div>
+    <div class="skill-group reveal">
+      <div class="skill-group-title">Analytics &amp; Strategy</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Time-Series Forecasting</span>
+        <span class="skill-tag">Variance Analysis</span>
+        <span class="skill-tag">Trend Analysis</span>
+        <span class="skill-tag">Correlation Analysis</span>
+        <span class="skill-tag">Financial Reporting</span>
+        <span class="skill-tag">Data Storytelling</span>
+        <span class="skill-tag">dplyr / tidyr</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Projects -->
+<section id="projects">
+  <div class="section-header reveal">
+    <div class="section-label">Portfolio</div>
+    <h2 class="section-title">Featured Projects</h2>
+  </div>
+  <div class="projects-grid">
+    <div class="project-card reveal">
+      <div class="project-date">May 2025</div>
+      <div class="project-title">Global Bikes — German Market Analysis</div>
+      <ul class="project-bullets">
+        <li>Prepared structured sales data using SQL and Excel for analysis and reporting.</li>
+        <li>Conducted correlation and customer contribution analysis across B2B customers using Tableau and Excel.</li>
+        <li>Identified seasonal winter sales dip; recommended tiered discounts and promotions to stabilize revenue.</li>
+        <li>Presented insights via visualizations and summary tables to support data-driven decision-making.</li>
+      </ul>
+      <div class="project-tools">
+        <span class="project-tool">SQL</span>
+        <span class="project-tool">Tableau</span>
+        <span class="project-tool">Excel</span>
+      </div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-date">Feb 2025</div>
+      <div class="project-title">Analytical Excel Dashboard</div>
+      <ul class="project-bullets">
+        <li>Designed an interactive dashboard using pivot tables, dynamic charts, slicers, and conditional formatting.</li>
+        <li>Monitored total defects, plant-wise performance, and KPIs with color-coded alerts.</li>
+        <li>Dashboard insights reduced defects by 22% monthly and accelerated management decision-making.</li>
+      </ul>
+      <div class="project-tools">
+        <span class="project-tool">Excel</span>
+        <span class="project-tool">Pivot Tables</span>
+        <span class="project-tool">KPI Design</span>
+      </div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-date">Dec 2024</div>
+      <div class="project-title">NY Housing Market Time-Series Analysis</div>
+      <ul class="project-bullets">
+        <li>Cleaned and analyzed 30 years of FHFA regional housing data across five U.S. regions using R.</li>
+        <li>Developed time-series models using forecast and tseries libraries to predict Housing Price Index growth.</li>
+        <li>Forecast estimated 0.24% national HPI growth, with 0.46% growth projected for New England.</li>
+      </ul>
+      <div class="project-tools">
+        <span class="project-tool">R</span>
+        <span class="project-tool">dplyr</span>
+        <span class="project-tool">tidyr</span>
+        <span class="project-tool">tseries</span>
+        <span class="project-tool">forecast</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Experience -->
+<section id="experience">
+  <div class="section-header reveal">
+    <div class="section-label">Work History</div>
+    <h2 class="section-title">Professional Experience</h2>
+  </div>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-left">
+        <div class="timeline-period">Jul 2022 – Aug 2023</div>
+        <div class="timeline-company">Jerome Environmental<br>Services, Bronx NY</div>
+      </div>
+      <div>
+        <div class="timeline-role">Administrative Coordinator</div>
+        <ul class="timeline-bullets">
+          <li>Managed 15+ concurrent mold remediation projects per month using Salesforce, QuickBooks, and Asana across the full project lifecycle.</li>
+          <li>Led a field team of seven technicians, overseeing resource allocation and timely execution.</li>
+          <li>Oversaw quotes, invoicing, and receivables workflows in QuickBooks for accurate financial reporting.</li>
+          <li>Designed an internal Excel dashboard to track projects, improving reporting accuracy by 10%.</li>
+          <li>Analyzed operational KPIs to close gaps, improving workflow efficiency by 8%.</li>
+          <li>Led weekly cross-functional stakeholder meetings, boosting new project intake by 10%.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-left">
+        <div class="timeline-period">Mar 2020 – Jun 2022</div>
+        <div class="timeline-company">Koyla Enterprise,<br>Bronx NY</div>
+      </div>
+      <div>
+        <div class="timeline-role">Sales and Finance Associate</div>
+        <ul class="timeline-bullets">
+          <li>Analyzed bi-weekly revenue and sales data in Excel using trend and variance analysis to support financial reporting and invoicing accuracy.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Education -->
+<section id="education">
+  <div class="section-header reveal">
+    <div class="section-label">Academic Background</div>
+    <h2 class="section-title">Education</h2>
+  </div>
+  <div class="edu-grid">
+    <div class="edu-card reveal">
+      <div class="edu-degree">MS – Business Analytics</div>
+      <div class="edu-school">Canisius University</div>
+      <div class="edu-year">Expected May 2026</div>
+    </div>
+    <div class="edu-card reveal">
+      <div class="edu-degree">BS – Accounting &amp; Finance</div>
+      <div class="edu-school">Institute of Business Management</div>
+      <div class="edu-year">January 2020</div>
+    </div>
+  </div>
+</section>
+
+<!-- Game -->
+<section id="game">
+  <div class="section-header reveal" style="text-align:center">
+    <div class="section-label" style="text-align:center">A Little Fun</div>
+    <h2 class="section-title">Take a Break — Play Tic Tac Toe</h2>
+  </div>
+  <p class="game-intro reveal">Even analysts need a break. You're <strong>X</strong> — go first!</p>
+  <div class="game-wrapper reveal">
+    <div class="score-board">
+      <div class="score-item"><strong id="score-x">0</strong>You (X)</div>
+      <div class="score-item"><strong id="score-d">0</strong>Draws</div>
+      <div class="score-item"><strong id="score-o">0</strong>AI (O)</div>
+    </div>
+    <div class="game-status" id="game-status">Your turn!</div>
+    <div class="board" id="board">
+      <div class="cell" data-i="0"></div>
+      <div class="cell" data-i="1"></div>
+      <div class="cell" data-i="2"></div>
+      <div class="cell" data-i="3"></div>
+      <div class="cell" data-i="4"></div>
+      <div class="cell" data-i="5"></div>
+      <div class="cell" data-i="6"></div>
+      <div class="cell" data-i="7"></div>
+      <div class="cell" data-i="8"></div>
+    </div>
+    <div class="game-controls">
+      <button class="btn-outline" id="reset-btn" onclick="resetGame()">New Game</button>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="about-label reveal">Get In Touch</div>
+    <h2 class="contact-heading reveal">Let's work<br><em>together.</em></h2>
+    <p class="contact-sub reveal">Open to full-time roles in business analytics, operations coordination, and reporting. Available for immediate outreach.</p>
+    <div class="contact-links reveal">
+      <a href="mailto:hafsamazhar89@gmail.com" class="contact-link">
+        <div>
+          <div class="contact-link-label">Email</div>
+          <div class="contact-link-value">hafsamazhar89@gmail.com</div>
+        </div>
+        <span style="margin-left:auto; color: var(--taupe);">→</span>
+      </a>
+      <a href="tel:+13478499349" class="contact-link">
+        <div>
+          <div class="contact-link-label">Phone</div>
+          <div class="contact-link-value">+1 (347) 849-9349</div>
+        </div>
+        <span style="margin-left:auto; color: var(--taupe);">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2025 Hafsa Mazhar</span>
+  <span>Business Analytics · Operations · Reporting</span>
+</footer>
+
+<script>
+
+const revealEls = document.querySelectorAll('.reveal, .timeline-item');
+const io = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), (e.target.dataset.delay || 0));
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.15 });
+revealEls.forEach((el, i) => {
+  el.dataset.delay = (i % 4) * 80;
+  io.observe(el);
+});
+
+// ── TIC TAC TOE ──
+let board = Array(9).fill(null);
+let gameOver = false;
+let scores = { X: 0, O: 0, D: 0 };
+const wins = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+
+function checkWin(b, p) {
+  return wins.find(combo => combo.every(i => b[i] === p)) || null;
+}
+
+function bestMove(b) {
+  // Minimax
+  function minimax(b, isMax) {
+    if (checkWin(b, 'O')) return 10;
+    if (checkWin(b, 'X')) return -10;
+    if (b.every(c => c)) return 0;
+    let best = isMax ? -Infinity : Infinity;
+    for (let i = 0; i < 9; i++) {
+      if (!b[i]) {
+        b[i] = isMax ? 'O' : 'X';
+        let score = minimax(b, !isMax);
+        b[i] = null;
+        best = isMax ? Math.max(best, score) : Math.min(best, score);
+      }
+    }
+    return best;
+  }
+  let bestVal = -Infinity, move = -1;
+  for (let i = 0; i < 9; i++) {
+    if (!b[i]) {
+      b[i] = 'O';
+      let v = minimax(b, false);
+      b[i] = null;
+      if (v > bestVal) { bestVal = v; move = i; }
+    }
+  }
+  return move;
+}
+
+function render() {
+  document.querySelectorAll('.cell').forEach((cell, i) => {
+    cell.textContent = board[i] || '';
+    cell.className = 'cell' + (board[i] ? ' taken ' + (board[i] === 'X' ? 'x-mark' : 'o-mark') : '');
+  });
+}
+
+function highlight(combo) {
+  combo.forEach(i => document.querySelector(`.cell[data-i="${i}"]`).classList.add('win-cell'));
+}
+
+document.querySelectorAll('.cell').forEach(cell => {
+  cell.addEventListener('click', () => {
+    const i = +cell.dataset.i;
+    if (board[i] || gameOver) return;
+    board[i] = 'X'; render();
+    const wx = checkWin(board, 'X');
+    if (wx) { highlight(wx); setStatus('🎉 You win!'); scores.X++; updateScore(); gameOver = true; return; }
+    if (board.every(c => c)) { setStatus("It's a draw!"); scores.D++; updateScore(); gameOver = true; return; }
+    setStatus('Thinking…');
+    setTimeout(() => {
+      const m = bestMove(board);
+      board[m] = 'O'; render();
+      const wo = checkWin(board, 'O');
+      if (wo) { highlight(wo); setStatus('AI wins this time!'); scores.O++; updateScore(); gameOver = true; return; }
+      if (board.every(c => c)) { setStatus("It's a draw!"); scores.D++; updateScore(); gameOver = true; return; }
+      setStatus('Your turn!');
+    }, 400);
+  });
+});
+
+function toggleEmailMenu(e) {
+  e.stopPropagation();
+  document.getElementById('emailMenu').classList.toggle('open');
+}
+document.addEventListener('click', () => {
+  const m = document.getElementById('emailMenu');
+  if (m) m.classList.remove('open');
+});
+function copyPhone(el) {
+  navigator.clipboard.writeText('+13478499349').then(() => {
+    const orig = el.textContent;
+    el.textContent = '✅ Copied!';
+    setTimeout(() => el.textContent = orig, 2000);
+  });
+}
+function setStatus(t) { document.getElementById('game-status').textContent = t; }
+function updateScore() {
+  document.getElementById('score-x').textContent = scores.X;
+  document.getElementById('score-o').textContent = scores.O;
+  document.getElementById('score-d').textContent = scores.D;
+}
+function resetGame() {
+  board = Array(9).fill(null);
+  gameOver = false;
+  render();
+  setStatus('Your turn!');
+}
+</script>
+</body>
+</html>
